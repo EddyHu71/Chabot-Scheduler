@@ -68,10 +68,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     // send same message as reply to user
                     if ($event['message']['text'] == 'Jadwal')
                     {
-                        $sql = 'SELECT * FROM "jadwal_lab" WHERE hari=1 AND ruangan = 1';
-                        $sql = mysqli_query($conn,$sql);
-                        $row = mysqli_fetch_assoc($sql);
-                        $msg = $row['kode_matkul'] . " " . $row['grup'];
+                        $msg = file_get_contents('https://iklcjadwal.info/test.php');
                         $result = $bot->replyText($event['replyToken'], $msg);
                     }
                     else
