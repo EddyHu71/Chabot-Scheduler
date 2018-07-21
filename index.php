@@ -68,21 +68,19 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $event['message']['text']);
-                        //$msg = substr($msg, 0, -1);
-                        $result = $bot->replyText($event['replyToken'], $msg);
                     }
                     else if ($word[0] === "Jadwal")
                     {
-                        $msg = "Test";
-                        $result = $bot->replyText($event['replyToken'], $msg);
+                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                     }
                     else
                     {
-                        $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                        $msg =  $event['message']['text'];
                     }
                     //$result = $bot->replyText($event['replyToken'], $balas);
+                    if (!isset($msg)) $msg = "Kueri error, silakan cek kembali kata-kata";
                     
-     
+                    $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
                     // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
