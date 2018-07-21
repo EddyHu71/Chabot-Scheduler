@@ -62,10 +62,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             {
                 if($event['message']['type'] == 'text')
                 {
+                    //cari nim
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
                     {
-                        //$msg = 'https://iklcjadwal.info/test.php?nim=' . $event['message']['text'];
                         $msg = file_get_contents('https://iklcjadwal.info/test.php?nim=' . $event['message']['text']);
+                        $msg = substr($msg, 0, -2);
                         $result = $bot->replyText($event['replyToken'], $msg);
                     }
                     else
