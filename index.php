@@ -64,7 +64,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 {
                     // send same message as reply to user
                     //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                    $result = $bot->replyText($event['replyToken'], $event['replyToken']);
+
+                    $balas = json_decode('{
+                        "type": "text",
+                        "text": "Jadwal atas nama <nama> adalah\n<lab1> : <Hari><Jam><ruangan>\n<lab2> : <Hari><Jam><ruangan>\n<lab3> : <Hari><Jam><ruangan>\n<lab4> : <Hari><Jam><ruangan>\n<lab5> : <Hari><Jam><ruangan>"
+                    }');
+                    $result = $bot->replyText($event['replyToken'], $balas);
+                    
      
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
