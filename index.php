@@ -7,9 +7,6 @@ use \LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
- 
-// connector
-include 'connect.php';
 
 // set false for production
 $pass_signature = true;
@@ -69,7 +66,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $inputan = $event['message']['text'];
                     if (($strlen($inputan) == 9 ) && (is_numeric($inputan)))
                     {
-                        $msg = $inputan;
+                        $msg = 'https://iklcjadwal.info/test.php?nim=' . $inputan;
                         //$msg = file_get_contents('https://iklcjadwal.info/test.php?nim='.$inputan);
                         $result = $bot->replyText($event['replyToken'], $msg);
                     }
