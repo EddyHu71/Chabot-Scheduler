@@ -69,7 +69,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $inputan = $event['message']['text'];
                     if (($strlen($inputan) == 9 ) && (is_numeric($inputan)))
                     {
-                        $msg = file_get_contents('https://iklcjadwal.info/test.php?nim='.$inputan);
+                        $msg = $inputan;
+                        //$msg = file_get_contents('https://iklcjadwal.info/test.php?nim='.$inputan);
                         $result = $bot->replyText($event['replyToken'], $msg);
                     }
                     else
