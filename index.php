@@ -63,10 +63,17 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if($event['message']['type'] == 'text')
                 {
                     //cari nim
+                    $replyInput = $event['message']['text'];
+                    $word = explode(' ',trim($replyInput));
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $event['message']['text']);
                         //$msg = substr($msg, 0, -1);
+                        $result = $bot->replyText($event['replyToken'], $msg);
+                    }
+                    else if ($word[0] === "Jadwal")
+                    {
+                        $msg = "Test";
                         $result = $bot->replyText($event['replyToken'], $msg);
                     }
                     else
