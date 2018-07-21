@@ -65,8 +65,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     //cari nim
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
                     {
-                        $msg = file_get_contents('https://iklcjadwal.info/test.php?nim=' . $event['message']['text']);
-                        $msg = substr($msg, 0, -2);
+                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $event['message']['text']);
+                        $msg = substr($msg, 0, -1);
                         $result = $bot->replyText($event['replyToken'], $msg);
                     }
                     else
