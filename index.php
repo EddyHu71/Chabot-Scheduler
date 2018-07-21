@@ -64,7 +64,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 {
                     // send same message as reply to user
                     //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                    $result = $bot->replyText($event['replyToken'], "Hai tayo");
+                    $result = $bot->replyText($event['replyToken'], $event['replyToken']);
      
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
