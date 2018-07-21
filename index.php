@@ -64,7 +64,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 {
                     // send same message as reply to user
                     $inputan = $event['message']['text'];
-                    if (($strlen($inputan) == 9 ) && (is_numeric($inputan)))
+                    if ($strlen($inputan) == 9)
                     {
                         $msg = 'https://iklcjadwal.info/test.php?nim=' . $inputan;
                         //$msg = file_get_contents('https://iklcjadwal.info/test.php?nim='.$inputan);
@@ -72,6 +72,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
                     else
                     {
+                        file_put_contents('php://stderr', 'UHUY GAK BISA');
                         $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                     }
                     //$result = $bot->replyText($event['replyToken'], $balas);
