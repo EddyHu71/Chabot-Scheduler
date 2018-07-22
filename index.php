@@ -63,6 +63,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if($event['message']['type'] == 'text')
                 {
                     //cari nim
+                    $balas = true;
                     $replyInput = $event['message']['text'];
                     $word = explode(' ',trim($replyInput));
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
@@ -71,16 +72,25 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
                     else if ($word[0] === "Jadwal")
                     {
-                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
+                        if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
+                        {
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $word[1]);
+                        }
+                        else
+                        {
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
+                        }
+                    }
+                    else if ($word[0] === "help")
+                    {
+                        $balas = false;
                     }
                     else
                     {
-                        $msg =  $event['message']['text'];
+                        $msg = "Kueri error, silakan cek kembali kata-kata";
                     }
-                    //$result = $bot->replyText($event['replyToken'], $balas);
-                    if (!isset($msg)) $msg = "Kueri error, silakan cek kembali kata-kata";
                     
-                    $result = $bot->replyText($event['replyToken'], $msg);
+                    if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
                     // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
