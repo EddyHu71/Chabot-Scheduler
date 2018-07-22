@@ -71,7 +71,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $event['message']['text']);
                     }
-                    else if (!strcmp($word[0],"jadwal"))
+                    else if (strcmp($word[0],"jadwal") === 0)
                     {
                         if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
                         {
