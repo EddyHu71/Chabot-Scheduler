@@ -86,6 +86,27 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $balas = false;
                     }
+                    else if ((strcasecmp($word[0],"tes") == 0))
+                    {
+                        //test aja
+                        $postdata = http_build_query(
+                            array(
+                                'nim' => 'some content',
+                                'var2' => 'doh'
+                            )
+                        );
+                        
+                        $opts = array('http' =>
+                            array(
+                                'method'  => 'POST',
+                                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                                'content' => $postdata
+                            )
+                        );
+                        $context  = stream_context_create($opts);
+                        
+                        $msg = file_get_contents('https://iklcjadwal.info/operasi.php', false, $context);
+                    }
                     else if (strcasecmp($word[0],"tambah") == 0)
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $pengirim);
