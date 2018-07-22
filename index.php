@@ -94,7 +94,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
                     else
                     {
-                        $msg = "Kueri error, silakan cek kembali kata-kata";
+                        $msg = "Kueri error, silakan cek kembali kata-kata" . $pengirim . "\n" . $event['source']['userId'];
                     }
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
