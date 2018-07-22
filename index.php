@@ -82,11 +82,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                         }
                     }
-                    else if (strcasecmp($word[0],"help") == 0)
+                    else if ((strcasecmp($word[0],"help") == 0) || strcasecmp($word[0],"bantu") == 0)
                     {
                         $balas = false;
                     }
-                    else if ((strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842") == 0)&&(strcasecmp($word[0],"tambah") == 0))
+                    else if (strcasecmp($word[0],"tambah") == 0)
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $pengirim);
                         $msgWord = explode(' ',trim($msg));
