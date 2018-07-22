@@ -88,13 +88,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
                     else if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842") == 0)
                     {
-                        $msg = file_get_contents('https://iklcjadwal.info/cek.php?userId=' . $word[1]);
+                        $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $word[1]);
                         $msgWord = explode(' ',trim($msg));
                         if ($msgWord[0] === "Maaf") $msg = $msg . "test \n";
                     }
                     else
                     {
-                        $msg = "Kueri error, silakan cek kembali kata-kata";
+                        $msg = "Maaf, kueri anda tidak dapat terbaca.\nSilakan periksa kembali kueri";
                     }
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
