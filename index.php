@@ -86,11 +86,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $balas = false;
                     }
+                    else if (($pengirim == "U0f83975415512a7f87c1d238c3749842")&&($word[0] == "Tambah"))
+                    {
+                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
+                        $msgWord = explode(' ',trim($msg));
+                        if ($msgWord[0] === "Maaf") $msg = $msg . "test \n";
+                    }
                     else
                     {
                         $msg = "Kueri error, silakan cek kembali kata-kata";
                     }
-                    $msg = $msg . " " . $pengirim;
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
