@@ -107,27 +107,4 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         }
     }
 });
- 
-$app->run();$word[0] == "tambah"))
-                    {
-                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
-                        $msgWord = explode(' ',trim($msg));
-                        if ($msgWord[0] === "Maaf") $msg = $msg . "test \n";
-                    }
-                    else
-                    {
-                        $msg = "Kueri error, silakan cek kembali kata-kata";
-                    }
-                    if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
-                    // or we can use replyMessage() instead to send reply message
-                    // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
-                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-     
-                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                }
-            }
-        }
-    }
-});
- 
 $app->run();
