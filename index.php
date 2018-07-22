@@ -86,7 +86,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $balas = false;
                     }
-                    else if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842") == 0)
+                    else if ((strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842") == 0)&&strcasecmp($word[0],"tambah"))
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $pengirim);
                         $msgWord = explode(' ',trim($msg));
