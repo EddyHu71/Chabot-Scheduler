@@ -64,6 +64,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 {
                     //cari nim
                     $balas = true;
+                    $pengirim = $event['source']['userId'];
                     $replyInput = $event['message']['text'];
                     $word = explode(' ',trim($replyInput));
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
@@ -89,7 +90,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $msg = "Kueri error, silakan cek kembali kata-kata";
                     }
-                    
+                    $msg = $msg . " " . $pengirim;
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
