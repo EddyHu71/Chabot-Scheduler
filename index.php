@@ -86,13 +86,18 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $balas = false;
                     }
-                    else if ((strcasecmp($word[0],"tes") == 0))
+                    else if ((strcasecmp($word[0],"tambah") == 0))
                     {
                         //test aja
                         $postdata = http_build_query(
                             array(
-                                'nim' => 'some content',
-                                'var2' => 'doh'
+                                'userId' => $pengirim,
+                                'kode' => $word[1],
+                                'grup' => $word[2],
+                                'hari' => $word[3],
+                                'jam' => $word[4],
+                                'nama_lab' => $word[5],
+                                'nomor_lab' => $word[6],
                             )
                         );
                         
