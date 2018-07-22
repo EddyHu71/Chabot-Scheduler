@@ -88,7 +88,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
                     else if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842") == 0)
                     {
-                        $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $pengirim[1]);
+                        $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $pengirim);
                         $msgWord = explode(' ',trim($msg));
                         if ($msgWord[0] === "Maaf") $msg = $msg . "test \n";
                     }
