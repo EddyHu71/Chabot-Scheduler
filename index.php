@@ -65,13 +65,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     //cari nim
                     $balas = true;
                     $pengirim = $event['source']['userId'];
-                    $replyInput = strtolower($event['message']['text']);
+                    $replyInput = $event['message']['text'];
                     $word = explode(' ',trim($replyInput));
                     if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $event['message']['text']);
                     }
-                    else if (strcmp($word[0],"jadwal") == 0)
+                    else if (strcasecmp($word[0],"jadwal") == 0)
                     {
                         if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
                         {
@@ -82,13 +82,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                         }
                     }
-                    else if (strcmp($word[0],"help") === 0)
+                    else if (strcasecmp($word[0],"help") == 0)
                     {
                         $balas = false;
                     }
                     else if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842") == 0)
                     {
-                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
+                        $msg = file_get_contents('https://iklcjadwal.info/cek.php?userId=' . $word[1]);
                         $msgWord = explode(' ',trim($msg));
                         if ($msgWord[0] === "Maaf") $msg = $msg . "test \n";
                     }
