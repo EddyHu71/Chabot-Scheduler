@@ -86,7 +86,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         $balas = false;
                     }
-                    else if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842")&&(strcmp($word[0],"tambah")))
+                    else if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842"))
                     {
                         $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                         $msgWord = explode(' ',trim($msg));
