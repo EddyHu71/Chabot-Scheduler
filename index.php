@@ -60,7 +60,22 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         {
             if ($event['type'] == 'message')
             {
-                if($event['message']['type'] == 'text')
+                if (($event['source']['type'] == 'group')&&($event['message']['type'] == 'text'))
+                {
+                    if (strcasecmp($word[0],"#jadwal") == 0)
+                    {
+                        if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
+                        {
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $word[1]);
+                        }
+                        else
+                        {
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
+                        }
+                    }
+                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                }
+                else if($event['message']['type'] == 'text') //satu satu
                 {
                     //cari nim
                     $balas = true;
