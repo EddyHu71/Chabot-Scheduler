@@ -77,6 +77,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                         }
                     }
+                    if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
                 else if($event['message']['type'] == 'text') //satu satu
