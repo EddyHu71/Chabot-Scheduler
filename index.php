@@ -62,7 +62,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             {
                 if (($event['source']['type'] == 'group')&&($event['message']['type'] == 'text'))
                 {
-                    if (strcasecmp($word[0],"#jadwal") == 0)
+                    $balas = true;
+                    $pengirim = $event['source']['userId'];
+                    $replyInput = $event['message']['text'];
+                    $word = explode(' ',trim($replyInput));
+                    if (strcasecmp($word[0],"jadwal") == 0)
                     {
                         if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
                         {
