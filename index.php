@@ -98,6 +98,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 'jam' => $word[4],
                                 'nama_lab' => $word[5],
                                 'nomor_lab' => $word[6],
+                                'minggu' => 0
                             )
                         );
                         
