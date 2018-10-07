@@ -77,6 +77,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                         }
                     }
+                    else if ((strcasecmp($word[0],"jadwal") == 0)&&(count($word)==3))
+                    {
+                        if ((strcasecmp($word[1],"ngajar") == 0)&&(strlen($word[3]<4)))
+                        {
+                            $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kode_asis=' . $word[2]);
+                        }
+                    }
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
