@@ -114,13 +114,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                         //abaikan ini
                         $rePattern = '/nikah|wisuda|sidang|kerja/';
-                        if (preg_match($rePattern,$word[0])){
+                        if (preg_match($rePattern,$word[1])){
                             $msg = "Bila nanti saatnya telah tiba~";
                         }
                     }
 
                     //debug
-                    if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842"))
+                    if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842")==0)
                     {
                         $msg = $msg . $temp;
                     }
