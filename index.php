@@ -119,6 +119,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
                     }
 
+                    //debug
+                    if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842"))
+                    {
+                        $msg = $msg . $temp;
+                    }
+
                     //end
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
