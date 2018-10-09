@@ -68,7 +68,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                     //log
                     $salt = preg_replace('/\s+/', '_', $replyInput);
-                    $temp = file_get_contents('https://iklcjadwal.info/ambil.php?uid=' . $pengirim.'&pesan='.$salt);
+                    $urltest = 'https://iklcjadwal.info/ambil.php?uid=' . $pengirim.'&pesan='.$salt;
+                    $temp = file_get_contents($urltest);
 
                     //Help auto
                     if ((strcasecmp($word[0],"help") == 0) || strcasecmp($word[0],"bantu") == 0){
@@ -122,7 +123,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     //debug
                     if ((strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842")==0)&&(strcmp($type,"user")==0))
                     {
-                        $msg = $msg . $pesan;
+                        $msg = $msg . $urltest;
                     }
 
                     //end
