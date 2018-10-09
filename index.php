@@ -120,9 +120,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
 
                     //debug
-                    if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842")==0)
+                    if ((strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842")==0)&&(strcmp($type,"user")==0))
                     {
-                        $msg = $msg . $salt;
+                        $msg = $msg . $pesan;
                     }
 
                     //end
