@@ -84,7 +84,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     if (strcasecmp($word[0],"jadwal") == 0){
                         //nim
                         if ((strlen($word[1]) === 9)&&(is_numeric($event['message']['text']))){
-                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $replyInput);
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $word[1]);
                         }
                         //kode lab
                         if ((strlen($word[1]) < 4)){
@@ -122,7 +122,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     //debug
                     if (strcmp($pengirim,"U0f83975415512a7f87c1d238c3749842")==0)
                     {
-                        $msg = $msg . $temp;
+                        $msg = $msg . $salt;
                     }
 
                     //end
