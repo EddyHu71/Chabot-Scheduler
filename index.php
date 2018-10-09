@@ -58,98 +58,68 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     if(is_array($data['events'])){
         foreach ($data['events'] as $event)
         {
-            if ($event['type'] == 'message')
-            {
-                if (($event['source']['type'] == 'group')&&($event['message']['type'] == 'text'))
-                {
+            if ($event['type'] == 'message'){
+                if ($event['message']['type'] == 'text'){
                     $balas = true;
                     $pengirim = $event['source']['userId'];
                     $replyInput = $event['message']['text'];
+                    $type = $event['source']['type'];
                     $word = explode(' ',trim($replyInput));
-                    if ((strcasecmp($word[0],"jadwal") == 0)&&(count($word)==2))
-                    {
-                        if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
-                        {
-                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $word[1]);
-                        }
-                        else
-                        {
-                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
-                        }
-                    }
-                    else if ((strcasecmp($word[0],"jadwal") == 0)&&(count($word)==3))
-                    {
-                        if ((strcasecmp($word[1],"ngajar") == 0)&&(strlen($word[3]<4)))
-                        {
-                            $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kode_asis=' . $word[2]);
-                        }
-                    }
-                    if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
-                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                }
-                else if($event['message']['type'] == 'text') //satu satu
-                {
-                    //cari nim
-                    $balas = true;
-                    $pengirim = $event['source']['userId'];
-                    $replyInput = $event['message']['text'];
-                    $word = explode(' ',trim($replyInput));
-                    if ((strlen($event['message']['text']) === 9)&&(is_numeric($event['message']['text'])))
-                    {
-                        $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $event['message']['text']);
-                    }
-                    else if (strcasecmp($word[0],"jadwal") == 0)
-                    {
-                        if ((strlen($word[1]) === 9)&&(is_numeric($word[1])))
-                        {
-                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $word[1]);
-                        }
-                        else
-                        {
-                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
-                        }
-                    }
-                    else if ((strcasecmp($word[0],"help") == 0) || strcasecmp($word[0],"bantu") == 0)
-                    {
+
+                    //log
+                    $salt = preg_replace(' ', '%20', $replyInput);
+                    $temp = file_get_contents('https://iklcjadwal.info/ambil.php?uid=' . $pengirim.'&pesan='.$salt);
+
+                    //Help auto
+                    if ((strcasecmp($word[0],"help") == 0) || strcasecmp($word[0],"bantu") == 0){
                         $balas = false;
                     }
-                    else if ((strcasecmp($word[0],"tambah") == 0))
-                    {
-                        //test aja
-                        $postdata = http_build_query(
-                            array(
-                                'userId' => $pengirim,
-                                'kode' => $word[1],
-                                'grup' => $word[2],
-                                'hari' => $word[3],
-                                'jam' => $word[4],
-                                'nama_lab' => $word[5],
-                                'nomor_lab' => $word[6],
-                                'minggu' => 0
-                            )
-                        );
-                        
-                        $opts = array('http' =>
-                            array(
-                                'method'  => 'POST',
-                                'header'  => 'Content-type: application/x-www-form-urlencoded',
-                                'content' => $postdata
-                            )
-                        );
-                        $context  = stream_context_create($opts);
-                        
-                        $msg = file_get_contents('https://iklcjadwal.info/operasi.php', false, $context);
+                    //jadwal langsung nim
+                    if ((strlen($replyInput) === 9)&&(is_numeric($replyInput))){
+                        if ($type=="user"){
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $replyInput);
+                        }
                     }
-                    else if (strcasecmp($word[0],"tambah") == 0)
-                    {
-                        $msg = file_get_contents('https://iklcjadwal.info/cek.php?userid=' . $pengirim);
-                        $msgWord = explode(' ',trim($msg));
-                        if ($msgWord[0] === "Maaf") $msg = $msg . "test \n";
+                    //jadwal
+                    if (strcasecmp($word[0],"jadwal") == 0){
+                        //nim
+                        if ((strlen($word[1]) === 9)&&(is_numeric($event['message']['text']))){
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?nim=' . $replyInput);
+                        }
+                        //kode lab
+                        if ((strlen($word[1]) < 4)){
+                            $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
+                        }
+                        //jadwal kosong
+                        if (strcasecmp($word[1],"kosong") == 0){
+                            $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true');
+                        }
+
+                        //3 kata
+                        if (count($word)==3){
+                            //ngajar
+                            if (strcasecmp($word[1],"ngajar") == 0){
+                                //need check asis
+                                $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kode_asis=' . $word[2]);
+                            }
+                        }
+
+                        //4 kata
+                        if (count($word)==4){
+                            //jadwal kosong
+                            if ((strcasecmp($word[1],"kosong") == 0)&&(strcasecmp($word[2],"hari") == 0)){
+                                $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=' . $word[3]);
+                            }
+                        }
+
+                        //abaikan ini
+                        $rePattern = "nikah|wisuda|sidang|kerja";
+                        if (preg_match($rePattern,$word[0])){
+                            $msg = "Bila nanti saatnya telah tiba~";
+                        }
                     }
-                    else
-                    {
-                        $msg = "Maaf, kueri anda tidak dapat terbaca.\nSilakan periksa kembali kueri";
-                    }
+
+                    //end
                     if ($balas) $result = $bot->replyText($event['replyToken'], $msg);
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
