@@ -67,7 +67,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $word = explode(' ',trim($replyInput));
 
                     //log
-                    $salt = preg_replace(' ', '%20', $replyInput);
+                    $salt = preg_replace('/\s+/', '_', $replyInput);
                     $temp = file_get_contents('https://iklcjadwal.info/ambil.php?uid=' . $pengirim.'&pesan='.$salt);
 
                     //Help auto
@@ -113,7 +113,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
 
                         //abaikan ini
-                        $rePattern = "nikah|wisuda|sidang|kerja";
+                        $rePattern = '/nikah|wisuda|sidang|kerja/';
                         if (preg_match($rePattern,$word[0])){
                             $msg = "Bila nanti saatnya telah tiba~";
                         }
