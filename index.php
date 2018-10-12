@@ -110,6 +110,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                         $ada = true;
                                         $hari = $i;
                                         $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true&hari='.$i);
+                                        $msg = "https://iklcjadwal.info/ambilasis.php?kosong=true&hari=".$i;
                                         break;
                                     }
                                 }
