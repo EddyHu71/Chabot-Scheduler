@@ -109,10 +109,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     if (strcasecmp($hariW,$tabelHari[i]) == 0){
                                         $ada = true;
                                         $hari = $i;
+                                        $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true&hari='.$i);
                                         break;
                                     }
                                 }
-                                if ($ada) $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true&hari=$hari');
                             }
                         }
                         
