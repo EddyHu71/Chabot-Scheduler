@@ -91,10 +91,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         if ((strlen($word[1]) < 4)){
                             $msg = file_get_contents('https://iklcjadwal.info/ambil.php?kode=' . $word[1]);
                         }
-                        //jadwal kosong
-                        if (strcasecmp($word[1],"kosong") == 0){
-                            $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true');
-                        }
+                        
 
                         //3 kata
                         if (count($word)==3){
@@ -103,7 +100,22 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 //need check asis
                                 $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kode_asis=' . $word[2]);
                             }
+                            //jadwal kosong
+                            if (strcasecmp($word[1],"kosong") == 0){
+                                $hariW = $word[2];
+                                $ada = false;
+                                $tabelHari = array("senin","selasa","rabu","kamis","jumat");
+                                for($i=0;$i<5;$i++){
+                                    if (strcasecmp($hariW,$tabelHari[i]) == 0){
+                                        $ada = true;
+                                        $hari = $i;
+                                        break;
+                                    }
+                                }
+                                if ($ada) $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true&hari=$hari');
+                            }
                         }
+                        
 
                         //4 kata
                         if (count($word)==4){
