@@ -106,11 +106,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $ada = false;
                                 $tabelHari = array("senin","selasa","rabu","kamis","jumat");
                                 for($i=0;$i<5;$i++){
-                                    if (strcasecmp($hariW,$tabelHari[i]) == 0){
+                                    if (strcasecmp($hariW,$tabelHari[$i]) == 0){
                                         $ada = true;
                                         $hari = $i;
                                         $msg = file_get_contents('https://iklcjadwal.info/ambilasis.php?kosong=true&hari='.$i);
-                                        $msg = "https://iklcjadwal.info/ambilasis.php?kosong=true&hari=".$i;
                                         break;
                                     }
                                 }
