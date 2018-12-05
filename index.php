@@ -114,10 +114,17 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     }
                                 }
                             }
+
+                            //lao
+                            if (strcasecmp($word[1],"shift") == 0){
+                                if (strcasecmp($word[2],"lao") == 0){
+                                    $msg = "Setiap hari kecuali Kamis, jam 15.00 - 22.00";
+                                }
+                            }
                         }
                         
                         //lao
-                        if (preg_match('/ngopi|kopi|shift lao/',$word[1])){
+                        if (preg_match('/ngopi|kopi/',$word[1])){
                             $msg = "Setiap hari kecuali Kamis, jam 15.00 - 22.00";
                         }
 
